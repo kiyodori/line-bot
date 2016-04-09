@@ -1,0 +1,23 @@
+{
+  "name": "LINE echo",
+  "description": "Echo server for LINE BOT API",
+  "repository": "https://github.com/yuya-takeyama/line-echo",
+  "keywords": ["line", "bot"],
+  "env": {
+    "LINE_CHANNEL_ID": {
+      "description": "1462135190",
+      "required": true
+    },
+    "LINE_CHANNEL_SECRET": {
+      "description": "0d52bab446cfef497a7398e86e3ac8b7",
+      "required": true
+    },
+    "LINE_CHANNEL_MID": {
+      "description": "u0e094e83aa3ea3eca44530ac4923186e",
+      "required": true
+    }
+  },
+  "addons": [
+    "fixie:tricycle"
+  ]
+}
