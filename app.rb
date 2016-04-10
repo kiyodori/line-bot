@@ -12,7 +12,7 @@ class App < Sinatra::Base
       content = {
         contentType: 1,
         toType: 1,
-        text: search
+        text: "てすと"
       }
       request_content = {
         to: [msg['content']['from']],
