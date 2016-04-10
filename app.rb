@@ -17,10 +17,6 @@ class App < Sinatra::Base
     params = JSON.parse(request.body.read)
 
     params['result'].each do |msg|
-      klibrary = Klibrary.new('司馬遼太郎')
-      content = klibrary.search
-      # klibrary = Klibrary.new(msg['content'])
-      # content = klibrary.search
       response_content = {
         to: [msg['content']['from']],
         toChannel: 1383378250, # Fixed  value
@@ -28,10 +24,6 @@ class App < Sinatra::Base
         content: msg['content']
       }
 
-      endpoint_uri = 'https://trialbot-api.line.me/v1/events'
-      content_json = response_content.to_json
-
-      RestClient.proxy = ENV['FIXIE_URL'] if ENV['FIXIE_URL']
       RestClient.post(endpoint_uri, content_json, {
         'Content-Type' => 'application/json; charset=UTF-8',
         'X-Line-ChannelID' => ENV["LINE_CHANNEL_ID"],
