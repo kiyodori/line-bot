@@ -5,12 +5,14 @@ require_relative './model/klibrary'
 
 class App < Sinatra::Base
   post '/linebot/callback' do
+    klibrary = Klibrary.new(msg['content']['text'])
+    search = klibrary.search
     params = JSON.parse(request.body.read)
     params['result'].each do |msg|
       content = {
         contentType: 1,
         toType: 1,
-        text: msg['content']['text']
+        text: search
       }
       request_content = {
         to: [msg['content']['from']],
