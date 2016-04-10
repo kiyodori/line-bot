@@ -10,14 +10,17 @@ class App < Sinatra::Base
   get '/test' do
     klibrary = Klibrary.new('司馬遼太郎')
     result = klibrary.search
+    binding.pry
   end
 
   post '/linebot/callback' do
     params = JSON.parse(request.body.read)
 
     params['result'].each do |msg|
-      klibrary = Klibrary.new(msg['content'])
+      klibrary = Klibrary.new('司馬遼太郎')
       content = klibrary.search
+      # klibrary = Klibrary.new(msg['content'])
+      # content = klibrary.search
       response_content = {
         to: [msg['content']['from']],
         toChannel: 1383378250, # Fixed  value
