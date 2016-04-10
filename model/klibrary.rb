@@ -1,6 +1,5 @@
 require 'open-uri'
 require 'nokogiri'
-require 'pry'
 
 Book = Struct.new(:no, :type, :title, :author, :publisher, :year, :url)
 SEARCH_CONDITION_URL = 'http://www.library.city.kawasaki.jp/search.html'.freeze
