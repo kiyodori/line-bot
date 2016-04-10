@@ -1,17 +1,13 @@
-# Mostly taken from http://qiita.com/masuidrive/items/1042d93740a7a72242a3
-
 require 'sinatra/base'
 require 'json'
 require 'rest-client'
-require 'pry'
-require_relative 'model/klibrary'
 
 class App < Sinatra::Base
   post '/linebot/callback' do
     params = JSON.parse(request.body.read)
 
     params['result'].each do |msg|
-      response_content = {
+      request_content = {
         to: [msg['content']['from']],
         toChannel: 1383378250, # Fixed  value
         eventType: "138311608800106203", # Fixed value
@@ -19,7 +15,7 @@ class App < Sinatra::Base
       }
 
       endpoint_uri = 'https://trialbot-api.line.me/v1/events'
-      content_json = response_content.to_json
+      content_json = request_content.to_json
 
       RestClient.proxy = ENV['FIXIE_URL'] if ENV['FIXIE_URL']
       RestClient.post(endpoint_uri, content_json, {
