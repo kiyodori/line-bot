@@ -6,13 +6,17 @@ require_relative './model/klibrary'
 class App < Sinatra::Base
   post '/linebot/callback' do
     params = JSON.parse(request.body.read)
-
     params['result'].each do |msg|
+      content = {
+        contentType: 1,
+        toType: 1,
+        text: msg['content']['text']
+      }
       request_content = {
         to: [msg['content']['from']],
         toChannel: 1383378250, # Fixed  value
         eventType: "138311608800106203", # Fixed value
-        content: msg['content']
+        content: content
       }
 
       endpoint_uri = 'https://trialbot-api.line.me/v1/events'
