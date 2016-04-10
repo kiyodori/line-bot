@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'json'
 require 'rest-client'
+require_relative 'model/klibrary'
 
 class App < Sinatra::Base
   post '/linebot/callback' do
