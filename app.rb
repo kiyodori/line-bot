@@ -7,12 +7,6 @@ require 'pry'
 require_relative 'model/klibrary'
 
 class App < Sinatra::Base
-  get '/test' do
-    klibrary = Klibrary.new('司馬遼太郎')
-    result = klibrary.search
-    binding.pry
-  end
-
   post '/linebot/callback' do
     params = JSON.parse(request.body.read)
 
@@ -25,8 +19,9 @@ class App < Sinatra::Base
       }
 
       endpoint_uri = 'https://trialbot-api.line.me/v1/events'
-      content_json = request_content.to_json
+      content_json = response_content.to_json
 
+      RestClient.proxy = ENV['FIXIE_URL'] if ENV['FIXIE_URL']
       RestClient.post(endpoint_uri, content_json, {
         'Content-Type' => 'application/json; charset=UTF-8',
         'X-Line-ChannelID' => ENV["LINE_CHANNEL_ID"],
