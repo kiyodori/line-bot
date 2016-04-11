@@ -21,10 +21,11 @@ class Klibrary
     end
 
     if books.empty?
-      return <<"EOS"
+      noresult = <<"EOS"
 う〜1件もヒットしなかったよ(´；ω；｀)
 #{SEARCH_CONDITION_URL}
 EOS
+      return noresult
     end
 
     greeting = <<-EOS
