@@ -9,15 +9,16 @@ class App < Sinatra::Base
     LOG = Logger.new(STDOUT)
     LOG.level = Logger.const_get ENV['LOG_LEVEL'] || 'DEBUG'
     LOG.info 'linebot callback'
-    # klibrary = Klibrary.new(msg['content']['text'])
-    # search = klibrary.search
+    
     params = JSON.parse(request.body.read)
     params['result'].each do |msg|
+      klibrary = Klibrary.new(msg['content']['text'])
+      result = klibrary.search
       LOG.info msg['content']['text']
       content = {
         contentType: 1,
         toType: 1,
-        text: "てすと"
+        text: result
       }
       request_content = {
         to: [msg['content']['from']],
