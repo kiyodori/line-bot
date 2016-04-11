@@ -1,5 +1,6 @@
 require 'open-uri'
 require 'nokogiri'
+require 'pry'
 
 Book = Struct.new(:no, :type, :title, :author, :publisher, :year, :url)
 KLIBRARY_DOMAIN_URL = 'http://www.library.city.kawasaki.jp/'.freeze
@@ -17,6 +18,13 @@ class Klibrary
       td = tr.css("td")
       url = KLIBRARY_DOMAIN_URL + td[2].css("a").first.values.first
       book = Book.new(td[0].text, td[1].text, td[2].text, td[3].text, td[4].text, td[5].text, url)
+    end
+
+    if books.empty?
+      return <<"EOS"
+う〜1件もヒットしなかったよ(´；ω；｀)
+#{SEARCH_CONDITION_URL}
+EOS
     end
 
     greeting = <<-EOS
