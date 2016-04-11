@@ -6,13 +6,13 @@ require_relative 'model/klibrary'
 
 class App < Sinatra::Base
   post '/linebot/callback' do
-    logger.debug "---------check----------"
+    LOG = Logger.new(STDOUT)
+    LOG.level = Logger.const_get ENV['LOG_LEVEL'] || 'DEBUG'
+    LOG.info 'I am logging something.'
     # klibrary = Klibrary.new(msg['content']['text'])
     # search = klibrary.search
     params = JSON.parse(request.body.read)
     params['result'].each do |msg|
-      logger.debug "#{msg['content']['text']}"
-      print "#{msg['content']['text']}"
       content = {
         contentType: 1,
         toType: 1,
