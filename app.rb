@@ -6,12 +6,6 @@ require 'pry'
 require_relative 'model/klibrary'
 
 class App < Sinatra::Base
-  get '/' do
-    klibrary = Klibrary.new('aaaaaa')
-    result = klibrary.search
-    return result
-  end
-
   post '/linebot/callback' do
     LOG = Logger.new(STDOUT)
     LOG.level = Logger.const_get ENV['LOG_LEVEL'] || 'DEBUG'
