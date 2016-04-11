@@ -2,7 +2,8 @@ require 'open-uri'
 require 'nokogiri'
 
 Book = Struct.new(:no, :type, :title, :author, :publisher, :year, :url)
-SEARCH_CONDITION_URL = 'http://www.library.city.kawasaki.jp/search.html'.freeze
+KLIBRARY_DOMAIN_URL = 'http://www.library.city.kawasaki.jp/'.freeze
+SEARCH_CONDITION_URL = KLIBRARY_DOMAIN_URL + 'search.html'.freeze
 
 class Klibrary
   attr_reader :key1
@@ -14,7 +15,7 @@ class Klibrary
   def search
     books = html_doc.css("tbody tr").map do |tr|
       td = tr.css("td")
-      url = td[2].css("a").first.values
+      url = KLIBRARY_DOMAIN_URL + td[2].css("a").first.values.first
       book = Book.new(td[0].text, td[1].text, td[2].text, td[3].text, td[4].text, td[5].text, url)
     end
 
