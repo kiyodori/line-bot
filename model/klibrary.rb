@@ -19,16 +19,26 @@ class Klibrary
     end
 
     greeting = <<-EOS
-      よしきたっ、あるぞ！
+よしきたっ、あるぞ！
 
     EOS
 
     result = "#{greeting}"
     books.each do |b|
-      result << "<br>#{b.no}.<br>#{b.title}<br>#{b.author}¥r#{b.year}¥r¥n#{b.url}¥n"
+      result << <<"EOS"
+#{b.no}.
+#{b.title}
+#{b.author}
+#{b.year}
+#{b.url}
+
+EOS
     end
 
-    result << "¥nもっと調べたきゃ¥n#{SEARCH_CONDITION_URL}"
+    result << <<"EOS"
+もっと調べたきゃ
+#{SEARCH_CONDITION_URL}
+EOS
     return result
   end
 
