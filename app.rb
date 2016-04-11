@@ -14,7 +14,6 @@ class App < Sinatra::Base
     params['result'].each do |msg|
       klibrary = Klibrary.new(msg['content']['text'])
       result = klibrary.search
-      LOG.info msg['content']['text']
       content = {
         contentType: 1,
         toType: 1,

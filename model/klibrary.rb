@@ -13,45 +13,25 @@ class Klibrary
   end
 
   def search
-    books = html_doc.css("tbody tr").map do |tr|
-      td = tr.css("td")
-      url = KLIBRARY_DOMAIN_URL + td[2].css("a").first.values.first
-      book = Book.new(td[0].text, td[1].text, td[2].text, td[3].text, td[4].text, td[5].text, url)
-    end
-
-    if books.empty?
-      noresult = <<"EOS"
-う〜1件もヒットしなかったよ(´；ω；｀)
-#{SEARCH_CONDITION_URL}
-EOS
-      return noresult
-    end
-
-    greeting = <<-EOS
-よしきたっ、あるぞ！
-
-    EOS
+    books = search_books
+    return noresult if books.empty?
 
     result = "#{greeting}"
-    books.each do |b|
-      result << <<"EOS"
-#{b.no}.
-#{b.title}
-#{b.author}
-#{b.year}
-#{b.url}
+    books.each { |b| result << book_info(b) }
+    result << closing
 
-EOS
-    end
-
-    result << <<"EOS"
-もっと調べたきゃ
-#{SEARCH_CONDITION_URL}
-EOS
     return result
   end
 
   private
+
+  def search_books
+    html_doc.css("tbody tr").map do |tr|
+      td = tr.css("td")
+      url = KLIBRARY_DOMAIN_URL + td[2].css("a").first.values.first
+      book = Book.new(td[0].text, td[1].text, td[2].text, td[3].text, td[4].text, td[5].text, url)
+    end
+  end
 
   def html_doc
     response = RestClient.post('http://www.library.city.kawasaki.jp/clis/search', request_params)
@@ -85,5 +65,40 @@ EOS
         before.to_i(16).chr('UTF-8'),
         after.to_i(16).chr('UTF-8'))
     end
+  end
+
+  def noresult
+    text = ['う〜1件もヒットしなかったよ(´；ω；｀)', '0件どんまい！', '調べなおしてちょ(*´ω｀*)'].sample
+    <<"EOS"
+#{text}
+#{SEARCH_CONDITION_URL}
+EOS
+  end
+
+  def greeting
+    text = ['見つかったってばよ！', '素晴らしい本たちだ！', '世界が広がるね、うんうん'].sample
+    <<-EOS
+#{text}
+
+    EOS
+  end
+
+  def book_info(book)
+    <<"EOS"
+#{book.no}.
+#{book.title}
+#{book.author}
+#{book.year}
+#{book.url}
+
+EOS
+  end
+
+  def closing
+    text = ['ここからも調べられるよ', 'もっと調べてもよいぞよ', 'さらなる本の旅へ、いざ行かん！'].sample
+    <<"EOS"
+#{text}
+#{SEARCH_CONDITION_URL}
+EOS
   end
 end
