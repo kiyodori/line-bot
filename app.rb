@@ -2,7 +2,6 @@ require 'sinatra/base'
 require 'json'
 require 'rest-client'
 require 'logger'
-require 'pry'
 require_relative 'model/klibrary'
 
 class App < Sinatra::Base
