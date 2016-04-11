@@ -1,15 +1,10 @@
 require 'sinatra/base'
 require 'json'
 require 'rest-client'
-require 'logger'
 require_relative 'model/klibrary'
 
 class App < Sinatra::Base
   post '/linebot/callback' do
-    LOG = Logger.new(STDOUT)
-    LOG.level = Logger.const_get ENV['LOG_LEVEL'] || 'DEBUG'
-    LOG.info 'linebot callback'
-
     params = JSON.parse(request.body.read)
     params['result'].each do |msg|
       klibrary = Klibrary.new(msg['content']['text'])

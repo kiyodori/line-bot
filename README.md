@@ -19,7 +19,6 @@ $ heroku create #{application name}
 $ heroku config:set LINE_CHANNEL_ID=#{Channel ID}
 $ heroku config:set LINE_CHANNEL_SECRET=#{Channel secret}
 $ heroku config:set LINE_CHANNEL_MID=#{Channel MID}
-$ heroku config:set LOG_LEVEL=debug
 $ heroku config
 ```
 
