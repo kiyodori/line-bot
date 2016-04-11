@@ -18,10 +18,14 @@ class Klibrary
       book = Book.new(td[0].text, td[1].text, td[2].text, td[3].text, td[4].text, td[5].text, url)
     end
 
-    greeting = "よしきたっ、あるぞ！¥n"
+    greeting = <<-EOS
+      よしきたっ、あるぞ！
+
+    EOS
+
     result = "#{greeting}"
     books.each do |b|
-      result << "¥n#{b.no}.¥n#{b.title}¥n#{b.author}¥n#{b.year}¥n#{b.url}¥n"
+      result << "<br>#{b.no}.<br>#{b.title}<br>#{b.author}¥r#{b.year}¥r¥n#{b.url}¥n"
     end
 
     result << "¥nもっと調べたきゃ¥n#{SEARCH_CONDITION_URL}"
