@@ -6,6 +6,8 @@ require_relative 'model/klibrary'
 
 class App < Sinatra::Base
   post '/linebot/callback' do
+    LOG = Logger.new(STDOUT)
+    LOG.level = Logger.const_get ENV['LOG_LEVEL'] || 'DEBUG'  
     LOG.info 'linebot callback'
 
     params = JSON.parse(request.body.read)

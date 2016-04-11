@@ -1,12 +1,7 @@
 require 'bundler/setup'
 require_relative './app'
 
-configure do
-  # heroku logs setting
-  $stdout.sync = true
-  LOG = Logger.new(STDOUT)
-  LOG.level = Logger.const_get ENV['LOG_LEVEL'] || 'DEBUG'  
-end
-
+# heroku logs setting
+$stdout.sync = true
 
 run App
