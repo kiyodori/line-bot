@@ -8,10 +8,27 @@ $ git clone https://github.com/kiyodori/line-bot.git
 ## Usage
 It is easy to use Heroku for usage.
 
-### Create application
+### Create Heroku application
 ```
 $ heroku create #{application name}
 ```
+
+### Install Fixie
+[Fixie](https://elements.heroku.com/addons/fixie) provides static IP addresses for outbound requests, so you can register Server IP Whitelist on LINE developers.
+
+```
+$ heroku addons:create fixie:tricycle
+```
+
+### Register LINE BOT API
+You can register LINE BOT API on LINE developers.
+
+#### Callback URL
+Callback URL example.
+`https://#{Heroku URL}:443/linebot/callback`
+
+#### Server IP Whitelist
+You can register Server IP Whitelist by Fixie IP addresses.
 
 ### Set Heroku config
 
